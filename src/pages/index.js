@@ -1,10 +1,8 @@
 // @/pages/index.js
-
 import React from 'react'
 import Image from 'next/image';
 import Layout from '@/components/Layout'
-
-import coverImg from '@/img/cover.jpg';
+import TypeWriter from '@/components/Home/TypeWriter';
 
 export default function HomePage() {
   return (
@@ -13,8 +11,8 @@ export default function HomePage() {
         <div className="w-[300px] bg-bg1">
           sidebar
         </div>
-        <div className="flex">
-          content
+        <div className="flex flex-col flex-grow">
+          <TypeWriter appendClass="m-auto" />
         </div>
       </div>
     </Layout>
