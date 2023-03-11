@@ -1,7 +1,7 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { maxImageWidth } from "@/lib/formatFunctions";
-import CfImage from "./cfImage";
+import CfImage from "./CfImage";
 import { siteConfig } from "@/constants/siteConfig";
 import imageResizerConfig from "@/constants/imageResizerConfig";
 
