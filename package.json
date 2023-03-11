@@ -9,13 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^13.2.4",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
+    "framer-motion": "^10.2.4",
     "next": "13.2.3",
     "nextjs-progressbar": "^0.0.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.58.3"
+    "react-icons": "^4.8.0",
+    "react-markdown": "^8.0.5",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-tsparticles": "^2.9.3",
+    "react-wrap-balancer": "^0.4.0",
+    "rehype-raw": "^6.1.1",
+    "remark-gfm": "^3.0.1",
+    "sass": "^1.58.3",
+    "sweetalert2": "^11.7.3",
+    "tsparticles": "^2.9.3",
+    "tsparticles-interaction-light": "^2.9.3",
+    "tsparticles-path-polygon": "^2.9.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

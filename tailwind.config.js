@@ -6,7 +6,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg1: '#17181B'
+        bg0: '#15161A',
+        bg1: '#17181B',
+        bg2: '#191A1E',
+        designlyLeft: '#1C99FE',
+        designlyMiddle: '#7644FF',
+        designlyRight: '#FD4766',
+      },
+      fontFamily: {
+        'deathstar': 'var(--deathstar-font)'
       },
       animation: {
         'cursor': 'cursor 1s ease-in-out infinite',

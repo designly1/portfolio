@@ -1,0 +1,65 @@
+@layer components {
+    .children-my-auto {
+        * {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+    }
+
+    .slant-left {
+        &:before {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            left: -10%;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: inherit;
+            -webkit-transform: skewX(-10deg);
+            -moz-transform: skewX(-10deg);
+            -ms-transform: skewX(-10deg);
+            transform: skewX(-10deg);
+        }
+    }
+
+    .slant-right {
+        &:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: inherit;
+            -webkit-transform: skewX(-10deg);
+            -moz-transform: skewX(-10deg);
+            -ms-transform: skewX(-10deg);
+            transform: skewX(-10deg);
+        }
+    }
+
+    .table-dark {
+        @apply w-full md:w-[98%] mx-auto mb-8;
+
+        td,
+        th {
+            @apply p-2 text-start;
+        }
+
+        thead {
+            @apply bg-slate-700;
+        }
+
+        tbody {
+            tr:nth-child(odd) {
+                @apply bg-bg1;
+            }
+
+            tr:nth-child(even) {
+                @apply bg-bg2;
+            }
+        }
+    }
+}
