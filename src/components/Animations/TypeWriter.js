@@ -21,9 +21,11 @@ export default function TypeWriter({ appendClass }) {
     // State of current hat index
     const [currentHat, setCurrentHat] = useState(0);
     // State to toggle word collapse effect
-    const [collapseClass, setCollapseClass] = useState(" w-full");
+    const [collapseClass, setCollapseClass] = useState(" w-0");
 
     useEffect(() => {
+        setTimeout(() => setCollapseClass(" w-full"), 100);
+
         const incrementHat = async () => {
             // Set the width to 0 - transition duration is 1000ms
             setCollapseClass(" w-0");
