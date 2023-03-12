@@ -9,7 +9,7 @@ import imageResizerConfig from '@/constants/imageResizerConfig';
 import PopImage from './PopImage';
 import CodeCopyBtn from './CodeCopyBtn';
 
-export default function MdPage({ markdown, appendClass, justify }) {
+export default function MdPage({ markdown, appendClass, justify, pClass }) {
   const Pre = ({ children }) =>
     <pre>
       <CodeCopyBtn>{children}</CodeCopyBtn>
@@ -26,7 +26,7 @@ export default function MdPage({ markdown, appendClass, justify }) {
       />
     </div>
 
-  const P = ({ children }) => <p className={`${justify ? 'text-justify' : ''}`}>{children}</p>
+  const P = ({ children }) => <p className={`${justify ? 'text-justify' : ''}${pClass ? ' ' + pClass : ''}`}>{children}</p>
 
   const NextLink = ({ href, content }) => <Link href={href}>{content}</Link>;
 

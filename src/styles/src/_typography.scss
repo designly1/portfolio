@@ -59,8 +59,6 @@
         }
 
         p {
-            @apply text-lg;
-
             &:not(:last-of-type) {
                 @apply mb-8;
             }
