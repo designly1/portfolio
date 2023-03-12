@@ -1,15 +1,7 @@
 // @/components/Home/TypeWriter.js
 import React, { useState, useEffect } from 'react'
 
-// List of things to type
-const hats = [
-    'Web Developer',
-    'UI/UX Designer',
-    'Graphics Designer',
-    'Application Developer'
-];
-
-export default function TypeWriter({ appendClass }) {
+export default function TypeWriter({ appendClass, hats, prefix }) {
     // Outer container base class + append custom class
     let className = "flex flex-col gap-4";
     if (appendClass) className += " " + appendClass;
@@ -35,11 +27,14 @@ export default function TypeWriter({ appendClass }) {
                  * is collapsed by incrementing the index
                  */
                 setCurrentHat(oldVal => {
+                    let hatIndex;
                     if (oldVal >= hats.length - 1) {
-                        return 0;
+                        hatIndex = 0;
                     } else {
-                        return oldVal + 1;
+                        hatIndex = oldVal + 1;
                     }
+
+                    return hatIndex;
                 });
             }, 1100);
             // After 1000ms, set width to 100% - transition duration is 1000ms
@@ -56,12 +51,15 @@ export default function TypeWriter({ appendClass }) {
 
     return (
         <div className={className}>
-            <div className="text-6xl text-center mx-auto">
+            <div className="text-5xl md:text-6xl text-center mx-auto">
                 Jay <span className="text-blue-400 font-bold">Simons</span>
             </div>
-            <div className="flex gap-2 text-4xl mx-auto">
-                <div className="shrink-0 whitespace-nowrap ml-auto">I am a</div>
-                <div className={`${typeWriterClass}${collapseClass}`}>{hats[currentHat]}</div>
+            <div className="flex gap-2 text-2xl md:text-4xl mx-auto">
+                <div className="shrink-0 whitespace-nowrap ml-auto">
+                    {prefix}
+                    {hats[currentHat].prep ? ` ${hats[currentHat].prep} ` : ''}
+                </div>
+                <div className={`${typeWriterClass}${collapseClass}`}>{hats[currentHat].suffix}</div>
             </div>
         </div>
     )

@@ -8,6 +8,29 @@ import ParticleOverlay from '@/components/Animations/ParticleOverlay';
 import hexa from '@/particleConfigs/hexa';
 import coverImg from '@/img/cover.jpg';
 
+const hats = [
+  {
+    prep: 'a',
+    suffix: 'Web Developer'
+  },
+  {
+    prep: 'a',
+    suffix: 'UI/UX Designer'
+  },
+  {
+    prep: 'a',
+    suffix: 'Graphics Designer'
+  },
+  {
+    prep: 'a',
+    suffix: 'Music Producer'
+  },
+  {
+    prep: 'an',
+    suffix: 'Electrical Engineer'
+  }
+];
+
 export default function HomePage() {
   return (
     <Layout>
@@ -19,7 +42,11 @@ export default function HomePage() {
           fill
         />
         <ParticleOverlay config={hexa} usePolygon />
-        <TypeWriter appendClass="m-auto" />
+        <TypeWriter
+          appendClass="m-auto"
+          hats={hats}
+          prefix="I am"
+        />
       </div>
     </Layout>
   )
