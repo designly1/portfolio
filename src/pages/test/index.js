@@ -9,7 +9,7 @@ export default function TestPage({ products }) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     let products = [];
     try {
         const result = await fetch("https://dummyjson.com/products");

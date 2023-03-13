@@ -39,7 +39,7 @@ export default function Sidebar({ show, setter }) {
         <>
             <div className={`${className}${appendClass}`}>
                 <div className="relative">
-                    <Image className="z-10" src={jay} alt="Jay" width={200} height={200} />
+                    <Image className="z-10" src={jay.src} alt="Jay" width={200} height={200} />
                     <div className="absolute bottom-0 left-0 right-0 z-20 bg-gray-600/90 py-2 uppercase text-center">
                         Jay Simons
                     </div>
