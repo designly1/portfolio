@@ -4,6 +4,10 @@ const nextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './cfImageLoader.js'
+  },
+  swcMinify: true,
+  experimental: {
+    runtime: 'experimental-edge'
   }
 }
 
