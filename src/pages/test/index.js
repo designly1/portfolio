@@ -7,7 +7,9 @@ export const config = {
 
 export default function TestPage({ products }) {
     return (
-        <div>{JSON.stringify(products)}</div>
+        <Layout>
+            <div>{JSON.stringify(products)}</div>
+        </Layout>
     )
 }
 
@@ -16,7 +18,7 @@ export async function getServerSideProps() {
     try {
         const result = await fetch("https://dummyjson.com/products");
         const out = await result.json();
-        products = out.data;
+        products = out;
     } catch (err) {
         console.error(err);
     }
