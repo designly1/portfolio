@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from '@/components/Layout';
 
 export const config = {
-    runtime: 'edge',
+    runtime: 'experimental-edge',
 }
 
 export default function TestPage({ products }) {
