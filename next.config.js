@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './cfImageLoader.js'
+  },
+  experimental: {
+    runtime: 'edge'
   }
 }
 
