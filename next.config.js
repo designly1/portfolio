@@ -6,7 +6,7 @@ const nextConfig = {
     loaderFile: './cfImageLoader.js'
   },
   experimental: {
-    runtime: 'edge'
+    runtime: 'experimental-edge'
   }
 }
 
