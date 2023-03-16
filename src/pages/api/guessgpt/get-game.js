@@ -3,21 +3,22 @@ export const config = {
     runtime: 'edge',
 }
 
-export default async function handler(req) {
+export default async function handler(req, env) {
+    console.log(env)
     const data = {
         collection: 'twoPics',
         database: 'portfolio',
         dataSource: 'Cluster0'
     };
 
-    const url = `${CLOUDFLARE_WORKERS_ENV.NEXT_PUBLIC_DB_ENDPOINT}/action/find`;
+    const url = `${env.NEXT_PUBLIC_DB_ENDPOINT}/action/find`;
 
     const config = {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Request-Headers': '*',
-            'api-key': CLOUDFLARE_WORKERS_ENV.NEXT_PUBLIC_DB_KEY
+            'api-key': env.NEXT_PUBLIC_DB_KEY
         },
         body: JSON.stringify(data)
     }

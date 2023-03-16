@@ -3,8 +3,9 @@ export const config = {
     runtime: 'edge',
 }
 
-export default async function handleRequest(request) {
-    const OPENAI_API_KEY = CLOUDFLARE_WORKERS_ENV.NEXT_PUBLIC_OPENAI_KEY;
+export default async function handleRequest(request, env) {
+    console.log(env)
+    const OPENAI_API_KEY = env.NEXT_PUBLIC_OPENAI_KEY;
     const OPENAI_COMPLETION_ENDPOINT = 'https://api.openai.com/v1/completions';
 
     // Define the input text to be completed
