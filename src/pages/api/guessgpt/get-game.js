@@ -4,7 +4,7 @@ export const config = {
 }
 
 export default async function handler(req, env) {
-    console.log(env)
+    console.log(JSON.stringify(env))
     const data = {
         collection: 'twoPics',
         database: 'portfolio',
