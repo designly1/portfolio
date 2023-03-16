@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Howl } from 'howler';
 import LinearProgress from '@mui/material/LinearProgress';
 import Turnstile from 'react-turnstile';
+import { siteConfig } from '@/constants/siteConfig';
 
 const CORRECT_THRESHOLD = 91;
 const SFX_VOL = 0.5;
@@ -80,7 +81,7 @@ export default function GuessGPT() {
             input: 'text',
             html: <div className="flex [&>*]:mx-auto h-[65px]">
                 <Turnstile
-                    sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                    sitekey={siteConfig.turnstileSiteKey}
                     onVerify={(token) => setToken(token)}
                 />
             </div>,
