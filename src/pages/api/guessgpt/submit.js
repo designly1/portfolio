@@ -4,7 +4,7 @@ export const config = {
 }
 
 export default async function handleRequest(request) {
-    const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_KEY;
+    const OPENAI_API_KEY = NEXT_PUBLIC_OPENAI_KEY;
     const OPENAI_COMPLETION_ENDPOINT = 'https://api.openai.com/v1/completions';
 
     // Define the input text to be completed
