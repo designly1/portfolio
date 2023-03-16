@@ -7,21 +7,21 @@ export default async function handler(req, env, ctx) {
     console.log(JSON.stringify(env))
     console.log(JSON.stringify(ctx))
     console.log(JSON.stringify(process.env))
-    
+
     const data = {
         collection: 'twoPics',
         database: 'portfolio',
         dataSource: 'Cluster0'
     };
 
-    const url = `${env.NEXT_PUBLIC_DB_ENDPOINT}/action/find`;
+    const url = `${process.env.NEXT_PUBLIC_DB_ENDPOINT}/action/find`;
 
     const config = {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Request-Headers': '*',
-            'api-key': env.NEXT_PUBLIC_DB_KEY
+            'api-key': process.env.NEXT_PUBLIC_DB_KEY
         },
         body: JSON.stringify(data)
     }
