@@ -3,8 +3,11 @@ export const config = {
     runtime: 'edge',
 }
 
-export default async function handler(req, env) {
+export default async function handler(req, env, ctx) {
     console.log(JSON.stringify(env))
+    console.log(JSON.stringify(ctx))
+    console.log(JSON.stringify(process.env))
+    
     const data = {
         collection: 'twoPics',
         database: 'portfolio',
