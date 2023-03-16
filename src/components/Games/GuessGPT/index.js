@@ -3,14 +3,18 @@ import Heading from '../../UI/Heading'
 import GuessResults from './GuessResults';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content'
 import Loading from '@/components/Layout/Loading';
 import shuffleArray from '@/lib/shuffleArray';
 import { motion, AnimatePresence } from "framer-motion";
 import { Howl } from 'howler';
 import LinearProgress from '@mui/material/LinearProgress';
+import Turnstile from 'react-turnstile';
 
 const CORRECT_THRESHOLD = 91;
 const SFX_VOL = 0.5;
+
+const MySwal = withReactContent(Swal)
 
 export default function GuessGPT() {
     const [gameIsActive, setGameIsActive] = useState(false);
@@ -20,6 +24,7 @@ export default function GuessGPT() {
     const [gameIndex, setGameIndex] = useState(0);
     const [totalScore, setTotalScore] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [token, setToken] = useState();
 
     // Initialize sound effects
     const sfxStart = new Howl({
@@ -66,12 +71,19 @@ export default function GuessGPT() {
         setGameIndex(0);
         setTotalScore(0);
         setIsLoading(false);
+        setToken(null);
     }
 
     const answer = () => {
-        Swal.fire({
+        MySwal.fire({
             title: 'Submit your answer',
             input: 'text',
+            html: <div className="flex [&>*]:mx-auto h-[65px]">
+                <Turnstile
+                    sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                    onVerify={(token) => setToken(token)}
+                />
+            </div>,
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -167,7 +179,7 @@ export default function GuessGPT() {
                                                     <LinearProgress
                                                         variant="determinate"
                                                         value={(gameIndex + 1) / gameData.length * 100}
-                                                        sx={{height: '10px'}}
+                                                        sx={{ height: '10px' }}
                                                     />
                                                     <img
                                                         className="w-fit h-auto"
