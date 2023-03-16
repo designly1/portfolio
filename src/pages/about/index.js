@@ -50,7 +50,7 @@ export default function AboutPage() {
                 <div className="mx-auto py-20 overflow-hidden absolute top-0 right-0 bottom-0 left-0">
                     <div className="starwars text-white/80 m-auto md:px-[400px]">
                         <span>
-                            <h1 className="font-deathstar text-6xl text-center mb-6">About Me</h1>
+                            <h1 className="font-deathstar text-6xl text-center mb-6">Episode 1 - About Me</h1>
                             <MdPage markdown={md} pClass="text-xl" />
                         </span>
                     </div>

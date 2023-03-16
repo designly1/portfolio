@@ -6,6 +6,7 @@
 @import './src/typography';
 @import './src/ui';
 @import './src/notifications';
+@import '@sweetalert2/themes/dark/dark.scss';
 
 @layer components {
     .bg-img {

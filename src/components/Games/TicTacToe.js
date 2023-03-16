@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import Image from 'next/image';
 import toast from '@/lib/ui/toast';
 
