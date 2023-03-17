@@ -16,12 +16,12 @@ export default function Layout({ pageTitle, children }) {
             <Head>
                 <title>{titleConcat}</title>
             </Head>
-            <div className="h-screen text-white">
-                <div className="flex h-screen">
+            <div className="text-white min-h-screen">
+                <div className="flex">
                     <MenuButton setter={setShowSidebar} />
                     <Sidebar show={showSidebar} setter={setShowSidebar} />
                     <motion.div
-                        className="h-screen flex flex-col flex-grow w-screen md:w-full"
+                        className="flex flex-col flex-grow w-screen md:w-full min-h-screen"
                         initial={{ y: 300, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 300, opacity: 0 }}

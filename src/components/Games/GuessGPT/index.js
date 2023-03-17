@@ -82,7 +82,9 @@ export default function GuessGPT() {
             html: <div className="flex [&>*]:mx-auto h-[65px]">
                 <Turnstile
                     sitekey={siteConfig.turnstileSiteKey}
-                    onVerify={(token) => setToken(token)}
+                    onVerify={(token) => {
+                        setToken(token);
+                    }}
                 />
             </div>,
             inputAttributes: {
@@ -90,16 +92,22 @@ export default function GuessGPT() {
             },
             showCancelButton: true,
             confirmButtonText: 'Submit',
+
             showLoaderOnConfirm: true,
             preConfirm: async (answer) => {
                 const formData = new FormData();
                 formData.append('answer', gameData[gameIndex].answer);
                 formData.append('submitted', answer);
+                formData.append('token', token);
                 try {
                     const response = await fetch("/api/guessgpt/submit", {
                         method: 'POST',
                         body: formData,
                     });
+                    if (response.status !== 200) {
+                        Swal.fire("Error", response.statusText);
+                        return false;
+                    }
                     const json = await response.json();
                     return {
                         score: json.score,
@@ -113,7 +121,10 @@ export default function GuessGPT() {
                     })
                 }
             },
-            allowOutsideClick: () => !Swal.isLoading()
+            allowOutsideClick: () => !Swal.isLoading(),
+            didClose: () => {
+                setToken(null);
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 const score = parseInt(result.value.score);
@@ -153,7 +164,7 @@ export default function GuessGPT() {
     return (
         <>
             <Loading isLoading={isLoading} />
-            <div className="min-h-screen bg-bg2 py-20 px-4">
+            <div className="bg-bg2 py-20 px-4 min-h-screen">
                 <Heading type='h1' appendClass="text-center mb-10">GuessGPT</Heading>
                 <div className="flex flex-col gap-6 [&>*]:mx-auto">
                     {

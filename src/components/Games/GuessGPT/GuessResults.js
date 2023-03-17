@@ -6,7 +6,7 @@ export default function GuessResults({ results, score, resetGame }) {
     const maxScore = 100 * results.length;
 
     return (
-        <div className="max-w-[1200px] text-center">
+        <div className="max-w-[1200px] text-center mb-10">
             <h2 className="text-2xl text-yellow-400 mb-6">Game Summary</h2>
             <table className="table-dark md:min-w-[600px]">
                 <thead>

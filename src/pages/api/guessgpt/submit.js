@@ -9,6 +9,19 @@ export default async function handleRequest(request) {
 
     // Define the input text to be completed
     const formData = await request.formData();
+
+    // Check CAPTCHA token
+    const captchaOk = await checkTurnstileToken(formData.get('token'));
+    if (!captchaOk) {
+        return new Response(
+            null,
+            {
+                status: 500,
+                statusText: 'Could not verify CAPTCHA token'
+            }
+        )
+    }
+
     const input = `Using a Semantic similarity algorithm, please rate the similarity of the following phrases as a percentage:\n${formData.get('answer')}\n${formData.get('submitted')}`;
     // Define the parameters for the completion request
     const params = {
@@ -39,3 +52,26 @@ export default async function handleRequest(request) {
     }), { status: 200 });
 }
 
+async function checkTurnstileToken(token) {
+    const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
+
+    const formData = new FormData();
+    formData.append('secret', process.env.NEXT_PUBLIC_TURNSTILE_SECRET_KEY);
+    formData.append('response', token);
+
+    try {
+        const result = await fetch(url, {
+            body: formData,
+            method: 'POST',
+        });
+
+        const outcome = await result.json();
+        console.log(outcome)
+        if (outcome.success) {
+            return true;
+        }
+    } catch (err) {
+        console.error(err);
+    }
+    return false;
+}
