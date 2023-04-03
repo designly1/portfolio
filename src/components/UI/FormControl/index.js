@@ -3,7 +3,7 @@ import { FaCheck, FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { TbCopy } from 'react-icons/tb';
 import { BsCheckSquare } from 'react-icons/bs'
 import { v4 as uuid } from 'uuid';
-import InputElement from '@/components/ui/FormControl/InputElement';
+import InputElement from './InputElement';
 
 // Valid component variants
 const types = [
