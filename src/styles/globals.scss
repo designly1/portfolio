@@ -8,6 +8,13 @@
 @import './src/notifications';
 @import '@sweetalert2/themes/dark/dark.scss';
 
+@media print {
+    * {
+        color: black !important;
+        break-inside: avoid;
+    }
+}
+
 @layer components {
     .bg-img {
         position: absolute;
