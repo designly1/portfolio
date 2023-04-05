@@ -4,7 +4,7 @@ const portfolioItems = [
         items: [
             {
                 title: "Magia Arcanum",
-                route: "https://rpg.designly.biz",
+                route: "https://magia.designly.biz",
                 description: "A retro RPG game written in JavaScipt. Uses HTML5 canvas."
             },
             {
@@ -36,6 +36,66 @@ const portfolioItems = [
                 title: "HTTP Requester",
                 route: "/utils/requester",
                 description: "Web-based HTTP request tool for testing APIs"
+            },
+            {
+                title: "Medium Uploader",
+                route: "https://medium-uploader.vercel.app",
+                description: "A plugin for Contentful headless CMS that allows uploading blog post objects to Medium.com and other platforms."
+            }
+        ]
+    },
+    {
+        title: "Websites",
+        items: [
+            {
+                title: "RadioShield",
+                route: "https://radio-shield.com",
+                description: "E-commerce site. Next.js front-end and Shopify back-end."
+            },
+            {
+                title: "Designly",
+                route: "https://designly.biz",
+                description: "Web developer company website & blog. Next.js front-end, MongoDB, Contentful CMS back-end."
+            },
+            {
+                title: "Simply Clean",
+                route: "https://simplycleanwi.com",
+                description: "Cleaning company landing page. React.js"
+            },
+            {
+                title: "Jaysudo.com",
+                route: "https://jaysudo.com",
+                description: "DJ website, discography, blog. Next.js front-end, Contentful CMS back-end."
+            }
+        ]
+    },
+    {
+        title: "Publications / Forums",
+        items: [
+            {
+                title: "Stack Overflow",
+                route: "https://stackoverflow.com/users/19046509/designly",
+                description: "Contributor"
+            },
+            {
+                title: "Medium.com",
+                route: "https://designly.medium.com",
+                description: "Contributer"
+            },
+            {
+                title: "Dev.to",
+                route: "https://dev.to/designly",
+                description: "Contributer"
+            },
+            {
+                title: "Hashnode",
+                route: "https://designly.hashnode.dev",
+                description: "Contributer"
+            },
+            {
+                title: "Quora",
+                route: "https://www.quora.com/profile/J-Simons-10",
+                description: "Contributer"
             }
         ]
     }

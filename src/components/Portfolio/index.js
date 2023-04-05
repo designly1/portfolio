@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Heading from '../UI/Heading'
 
 import portfolioItems from '@/data/portfolioItems'
+import { VscLinkExternal } from 'react-icons/vsc'
 
 const Category = ({ title, items }) => (
     <fieldset className="border-2 border-white/20 rounded-2xl h-fit w-full md:w-[300px] px-4 py-2">
@@ -13,7 +14,10 @@ const Category = ({ title, items }) => (
                     const target = item.route.match(/^http/) ? '_blank' : null;
                     return (
                         <React.Fragment key={item.route}>
-                            <Link className="link" href={item.route} target={target}>{item.title}</Link>
+                            <Link className="link" href={item.route} target={target}>
+                                <div>{item.title}</div>
+                                <VscLinkExternal />
+                            </Link>
                             <div className="text-sm text-white/80 ml-2 mb-2">
                                 {item.description}
                             </div>

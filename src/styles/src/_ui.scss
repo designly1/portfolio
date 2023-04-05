@@ -1,8 +1,4 @@
 @layer components {
-    .link {
-        @apply text-designlyLeft hover:text-designlyMiddle transition-colors ease-in-out duration-300;
-    }
-
     .btn-trans {
         @apply transition-colors ease-in-out duration-300;
     }
@@ -18,5 +14,9 @@
             @extend .btn;
             @apply border-2 border-white/20;
         }
+    }
+
+    .link {
+        @apply text-designlyLeft hover:text-designlyMiddle transition-colors ease-in-out duration-300 btn-gap;
     }
 }

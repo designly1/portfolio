@@ -53,12 +53,11 @@ const Job = ({
 
 export default function Resume() {
     return (
-            <div className="min-h-screen bg-bg2 flex flex-col gap-10 px-4 md:px-10 lg:px-[20%] py-20 print:py-6 print:gap-2">
+            <div className="min-h-screen bg-bg2 flex flex-col gap-10 px-4 md:px-10 lg:px-[20%] py-20 print:py-6">
                 <div className="flex flex-col gap-2">
                     <Heading type='h1' appendClass="text-center">Jay Simons</Heading>
                     <h2 className="text-center text-xl">Software Engineer</h2>
                 </div>
-                <h2 className="font-bold text-3xl">I. Work History</h2>
                 <Job
                     company="Designly"
                     location="Madison, WI"
