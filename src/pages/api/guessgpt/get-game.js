@@ -10,14 +10,14 @@ export default async function handler(req) {
         dataSource: 'Cluster0'
     };
 
-    const url = `${process.env.NEXT_PUBLIC_DB_ENDPOINT}/action/find`;
+    const url = `${process.env.DB_ENDPOINT}/action/find`;
 
     const config = {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Request-Headers': '*',
-            'api-key': process.env.NEXT_PUBLIC_DB_KEY
+            'api-key': process.env.DB_KEY
         },
         body: JSON.stringify(data)
     }

@@ -4,7 +4,7 @@ export const config = {
 }
 
 export default async function handleRequest(request) {
-    const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_KEY;
+    const OPENAI_API_KEY = process.env.OPENAI_KEY;
     const OPENAI_COMPLETION_ENDPOINT = 'https://api.openai.com/v1/completions';
 
     // Define the input text to be completed
@@ -56,7 +56,7 @@ async function checkTurnstileToken(token) {
     const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 
     const formData = new FormData();
-    formData.append('secret', process.env.NEXT_PUBLIC_TURNSTILE_SECRET_KEY);
+    formData.append('secret', process.env.TURNSTILE_SECRET_KEY);
     formData.append('response', token);
 
     try {
