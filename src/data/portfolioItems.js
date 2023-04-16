@@ -25,8 +25,13 @@ const portfolioItems = [
         ]
     },
     {
-        title: "Utilities",
+        title: "Apps",
         items: [
+            {
+                title: "Snoozle.io",
+                route: "https://snoozle.io",
+                description: "An app that uses GPT to generate bedtime stories based on user-defined constraints. Narrations done by IBM Watson."
+            },
             {
                 title: "Smartname.app",
                 route: "https://smartname.app",
