@@ -17,7 +17,9 @@ export default function Sidebar({ show, setter }) {
     const appendClass = show ? " ml-0" : " ml-[-200px] md:ml-0";
 
     const MenuItem = ({ icon, name, route }) => {
-        const colorClass = router.pathname === route ? "text-white" : "text-white/50 hover:text-white";
+        const pathChunks = router.pathname.split('/');
+        const routeChunks = route.split('/');
+        const colorClass = pathChunks[1] === routeChunks[1] ? "text-white" : "text-white/50 hover:text-white";
 
         return (
             <Link

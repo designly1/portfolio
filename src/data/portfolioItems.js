@@ -1,5 +1,15 @@
 const portfolioItems = [
     {
+        title: "Teaching / Experimental",
+        items: [
+            {
+                title: "Semantic Search",
+                route: "/portfolio/semantic-search",
+                description: "Proof of concept implementation of GPT-powered semantic (vector) search on PDF files."
+            }
+        ]
+    },
+    {
         title: "Games",
         items: [
             {

@@ -19,4 +19,8 @@
     .link {
         @apply text-designlyLeft hover:text-designlyMiddle transition-colors ease-in-out duration-300 btn-gap;
     }
+
+    .input-base {
+        @apply bg-transparent p-2 border-2 col-span-3 rounded-lg border-white/40 active:border-sky-400 w-full;
+    }
 }
