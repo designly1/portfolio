@@ -202,11 +202,13 @@ export default function SemanticSearch() {
                 file="https://cdn.designly.biz/pdf/hackers.pdf"
                 currentPageNumber={currentPageNumber}
             />
-            <h2 className="text-xl">Conclusion</h2>
-            <p>Thanks to the semantic similarity search, I am able to feed the most relevant passages from the body of text to ChatGPT.{' '}
-            ChatGPT has the ability to not just find the meaning of the question, but also summize the answer based on very limited information.
-            </p>
-            <p>This technology is going to utterly change the world as we know it. Our individual access to information and knowledge will be limitless.</p>
+            <div className="flex flex-col gap-6 pt-10 max-w-[800px]">
+                <h2 className="text-2xl text-center">Conclusion</h2>
+                <p>Thanks to the semantic similarity search, I am able to feed the most relevant passages from the body of text to ChatGPT.{' '}
+                    ChatGPT has the ability to not just find the meaning of the question, but also summize the answer based on very limited information.
+                </p>
+                <p>This technology is going to utterly change the world as we know it. Our individual access to information and knowledge will be limitless.</p>
+            </div>
         </div>
 
     )

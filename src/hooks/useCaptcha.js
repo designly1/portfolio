@@ -1,15 +1,16 @@
 import Turnstile, { useTurnstile } from "react-hook-turnstile";
 
 export default function useCaptcha({
-    onVerify
+    onVerify,
+    theme = 'dark'
 }) {
     const { reset } = useTurnstile();
 
-    const render = () => (
+    const render = (callback) => (
         <Turnstile
             sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-            onVerify={onVerify}
-            theme="dark"
+            onVerify={token => callback ? callback(token) : onVerify(token)}
+            theme={theme}
         />
     )
 

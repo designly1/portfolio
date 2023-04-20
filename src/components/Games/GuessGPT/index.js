@@ -9,8 +9,9 @@ import shuffleArray from '@/lib/shuffleArray';
 import { motion, AnimatePresence } from "framer-motion";
 import { Howl } from 'howler';
 import LinearProgress from '@mui/material/LinearProgress';
-import Turnstile from 'react-turnstile';
 import { siteConfig } from '@/constants/siteConfig';
+
+import useCaptcha from '@/hooks/useCaptcha';
 
 const CORRECT_THRESHOLD = 91;
 const SFX_VOL = 0.5;
@@ -26,6 +27,11 @@ export default function GuessGPT() {
     const [totalScore, setTotalScore] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState();
+
+    const captcha = useCaptcha({
+        theme: 'light'
+    });
+
 
     // Initialize sound effects
     const sfxStart = new Howl({
@@ -75,18 +81,21 @@ export default function GuessGPT() {
         setToken(null);
     }
 
+    const Captcha = () => {
+        return (
+            <div className="flex [&>*]:mx-auto h-[65px]">
+                {captcha.render(token => {
+                    setToken(token);
+                })}
+            </div>
+        )
+    }
+
     const answer = () => {
         MySwal.fire({
             title: 'Submit your answer',
             input: 'text',
-            html: <div className="flex [&>*]:mx-auto h-[65px]">
-                <Turnstile
-                    sitekey={siteConfig.turnstileSiteKey}
-                    onVerify={(token) => {
-                        setToken(token);
-                    }}
-                />
-            </div>,
+            html: <Captcha />,
             inputAttributes: {
                 autocapitalize: 'off'
             },
