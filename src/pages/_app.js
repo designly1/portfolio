@@ -1,5 +1,5 @@
 import '@/styles/globals.scss'
-import localFont from '@next/font/local'
+import localFont from 'next/font/local'
 import { IBM_Plex_Sans } from 'next/font/google';
 import NextNProgress from "nextjs-progressbar";
 import { AnimatePresence } from 'framer-motion'

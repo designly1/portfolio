@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import Balancer from 'react-wrap-balancer'
 import AILoader from '../UI/AILoader';
-import Captcha from '../UI/Captcha';
 import PdfReader from '../UI/PdfReader';
+import useCaptcha from '@/hooks/useCaptcha';
 
 export default function SemanticSearch() {
     const [searchTerm, setSearchTerm] = useState('');
     const [token, setToken] = useState(false);
-    const [showCap, setShowCap] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMess, setErrorMess] = useState('');
     const [searchErrorMess, setSearchErrorMess] = useState('');
     const [answer, setAnswer] = useState('');
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
     const [pageNumbers, setPageNumbers] = useState([]);
+
+    const captcha = useCaptcha({ onVerify: setToken });
 
     useEffect(() => {
         if (pageNumbers.length) {
@@ -24,6 +25,7 @@ export default function SemanticSearch() {
     const embedSearchTerm = async () => {
         const body = new FormData();
         body.append('searchTerm', searchTerm);
+        body.append('token', token);
         const result = await fetch('/api/vsearch/embed', {
             method: 'POST',
             body
@@ -46,39 +48,40 @@ export default function SemanticSearch() {
         const body = {
             searchTerm,
             chunks
-        }
+        };
 
-        const result = await fetch('/api/vsearch/answer', {
+        const response = await fetch('/api/vsearch/answer', {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        if (!result.ok) {
-            const mess = await result.text();
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message);
         }
 
-        // Get stream buffer
-        const data = result.body;
-        if (!data) return;
+        const stream = response.body;
+        const reader = stream.getReader();
 
-        setIsLoading(false);
+        while (true) {
+            const { done, value } = await reader.read();
 
-        // Stream ouput from ChatGPT
-        const reader = data.getReader();
-        const decoder = new TextDecoder();
-        let done = false;
+            if (done) {
+                break;
+            }
 
-        while (!done) {
-            const { value, done: doneReading } = await reader.read();
-            done = doneReading;
-            const chunkValue = decoder.decode(value);
-            setAnswer((prev) => prev + chunkValue);
+            const chunk = new TextDecoder('utf-8').decode(value);
+            setAnswer((prev) => prev + chunk);
         }
-    }
+    };
 
-    const handleSearch = async () => {
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (isLoading) return;
 
         setSearchErrorMess('');
@@ -95,18 +98,14 @@ export default function SemanticSearch() {
             }
         } catch (err) {
             setErrorMess(err.message);
+            captcha.reset();
         } finally {
             setIsLoading(false);
         }
     }
 
-    const resetCaptcha = () => {
-        setShowCap(false);
-        setTimeout(() => setShowCap(true), 200);
-    }
-
     const resetForm = () => {
-        resetCaptcha();
+        captcha.reset();
         setSearchTerm('');
         setErrorMess('');
         setSearchErrorMess('');
@@ -124,7 +123,18 @@ export default function SemanticSearch() {
                 procedure call to a stored function in the PG database. The function returns 3 matches in order of its cosine similarity. Those 3 chunks are concatenated{" "}
                 and then another API call is made to ChatGPT to digest the information and generate an answer to the question based on the provided data.
             </p>
-            <form className="w-full md:w-[400px] flex flex-col gap-6 h-[210px]">
+            <div className="flex flex-col gap-4">
+                <h2 className="text-xl">Suggested Queries:</h2>
+                <ol className="list-decimal">
+                    <li>Tell me about the IBM 704</li>
+                    <li>What is the author&apos;s sentiment about IBM?</li>
+                    <li>Who was Jack Dennis?</li>
+                </ol>
+            </div>
+            <form className="w-full md:w-[400px] flex flex-col gap-6" onSubmit={handleSearch}>
+                <div className="mx-auto">
+                    {captcha.render()}
+                </div>
                 {
                     isLoading
                         ?
@@ -135,13 +145,16 @@ export default function SemanticSearch() {
                                 errorMess
                                     ?
                                     <div className="font-mono m-auto text-center flex flex-col gap-6">
-                                        <div className="text-xl text-red-500 max-h-[210px] max-w-[500px] overflow-auto">
+                                        <div className="text-xl text-red-500 max-w-[500px] overflow-auto">
                                             <Balancer>{errorMess}</Balancer>
                                         </div>
                                         <button
                                             type="button"
                                             className="btn-bordered w-32 mx-auto hover:bg-bg0"
-                                            onClick={() => setErrorMess(false)}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setErrorMess(false)
+                                            }}
                                         >Try Again</button>
                                     </div>
                                     :
@@ -149,12 +162,15 @@ export default function SemanticSearch() {
                                         {
                                             answer
                                                 ?
-                                                <div className="flex flex-col gap-6 text-mono">
+                                                <div className="flex flex-col gap-6 text-mono overflow-auto">
                                                     <div>{answer}</div>
                                                     <button
                                                         type="button"
                                                         className="btn-bordered w-32 mx-auto hover:bg-bg0"
-                                                        onClick={() => resetForm()}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            resetForm()
+                                                        }}
                                                     >Try Again</button>
                                                 </div>
                                                 :
@@ -169,11 +185,9 @@ export default function SemanticSearch() {
                                                         />
                                                         <p className="text-sm text-red-500 font-mono pl-2">{searchErrorMess}</p>
                                                     </div>
-                                                    <Captcha setter={setToken} show={showCap} className="mx-auto" />
                                                     <button
-                                                        type="button"
+                                                        type="submit"
                                                         className="btn-bordered w-32 mx-auto hover:bg-bg0"
-                                                        onClick={() => handleSearch()}
                                                     >Search</button>
                                                 </div>
                                         }
@@ -182,6 +196,8 @@ export default function SemanticSearch() {
                         </>
                 }
             </form>
+            <h2 className="text-xl">PDF Document: <span className="italic">True Hackers</span></h2>
+            <p>Upon successful search match, the PDF viewer automatically takes you to the first relevant page.</p>
             <PdfReader
                 file="https://cdn.designly.biz/pdf/hackers.pdf"
                 currentPageNumber={currentPageNumber}

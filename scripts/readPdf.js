@@ -1,12 +1,14 @@
-const fs = require('fs');
-const pdf = require('pdf-scraper');
+import fs from 'fs'
+import { encode } from 'gpt-3-encoder';
+import PDF from 'pdf-scraper';
 
 const inFile = 'data/hackers.pdf';
 const outFile = 'data/hackers.json';
 const dataBuffer = fs.readFileSync(inFile);
-const wordsPerChunk = 200;
+const tokensPerChunk = 200;
+const documentTitle = "True Hackers"
 
-pdf(dataBuffer).then(function (data) {
+PDF(dataBuffer).then(function (data) {
     console.log(`Successfully parsed ${data.numpages} pages from ${inFile}`);
 
     // Iterate over PDF pages
@@ -15,43 +17,53 @@ pdf(dataBuffer).then(function (data) {
     let currentChunkWords = 0;
 
     const output = [];
+    let content = '';
     for (let pageIndex = 0; pageIndex < data.pages.length; pageIndex++) {
         console.log(`Parsing page #${pageIndex}...`);
 
-        // Split the item text into words
-        let words = data.pages[pageIndex].trim().split(/\s+/);
+        const pushChunk = (chunk) => {
+            const contentLength = encode(chunk).length;
+            console.log('Creating chunk of token length:', contentLength);
+            output.push({
+                documentTitle: documentTitle,
+                pageNo: pageIndex + 1,
+                tokens: contentLength,
+                content: chunk.trim()
+            });
+        }
 
-        // Loop through each word in the item text
-        for (const word of words) {
-            // Add the word to the current chunk
-            currentChunk += word + ' ';
-            currentChunkWords++;
+        // Normalize all whitespace to a single space
+        content = data.pages[pageIndex].replace(/\s+/g, ' ');
 
-            // If the current chunk has reached the maximum number of words, end the chunk at the end of the current sentence
-            if (currentChunkWords >= wordsPerChunk) {
-                // Find the last sentence in the current chunk
-                const lastSentenceEnd = currentChunk.lastIndexOf('.');
-                const lastSentenceStart = currentChunk.lastIndexOf('.', lastSentenceEnd - 1);
+        // If page content is longer than tokens limit, parse into sentences
+        if (encode(content).length > tokensPerChunk) {
 
-                // If the last sentence is longer than the maximum chunk length, end the chunk at the maximum chunk length
-                if (lastSentenceEnd - lastSentenceStart > wordsPerChunk) {
-                    currentChunk = currentChunk.substring(0, lastSentenceStart + 1);
+            // Split content into sentences
+            let sentences = content.split('. ');
+            let chunk = '';
+
+            for (let i = 0; i < sentences.length; i++) {
+                const sentence = sentences[i];
+                const sentenceTokenLength = encode(sentence).length;
+                const chunkTokenLength = encode(chunk).length;
+
+                // If our chunk has grown to exceed the tokens limit, append to output buffer
+                if (chunkTokenLength + sentenceTokenLength > tokensPerChunk) {
+                    pushChunk(chunk);
+                    chunk = '';
                 }
 
-                const regex = /(?<=\S)- /g;
-                currentChunk = currentChunk.replace(regex, '');
-
-                // Add the current chunk to the array of chunks and start a new chunk
-                output.push({
-                    documentTitle: 'WI SPS-382',
-                    pageNo: pageIndex + 1,
-                    content: currentChunk
-                });
-                console.log('--------------------------------------\n\n', currentChunk);
-                currentChunk = '';
-                currentChunkWords = 0;
-                chunkIndex++;
+                // If current sentence ends with a character, append a period, otherwise a space
+                if (sentence && sentence[sentence.length - 1].match(/[a-z0-9]/i)) {
+                    chunk += sentence + ". ";
+                } else {
+                    chunk += sentence + " ";
+                }
             }
+            // Append the remaining text
+            pushChunk(chunk);
+        } else {
+            pushChunk(content);
         }
     }
     fs.writeFileSync(outFile, JSON.stringify(output));

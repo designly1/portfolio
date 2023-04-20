@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
-import readRequestBody from "@/lib/readRequestBody";
+import readRequestBody from "@/lib/api/readRequestBody";
+import checkTurnstileToken from "@/lib/api/checkTurnstileToken";
 
 // Use Next.js edge runtime
 export const config = {
@@ -12,6 +13,12 @@ export default async function handler(request) {
 
     try {
         const requestData = await readRequestBody(request);
+
+        // Validate CAPTCHA response
+        if (!await checkTurnstileToken(requestData.token)) {
+            throw new Error('Captcha verification failed');
+        }
+
         const supabase = createClient(process.env.NEXT_PUBLIC_SB_URL, process.env.SB_SERVICE_KEY);
 
         // Get embedding vector for search term via OpenAI
