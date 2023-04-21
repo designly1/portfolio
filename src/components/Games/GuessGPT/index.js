@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Heading from '../../UI/Heading'
 import GuessResults from './GuessResults';
 import axios from 'axios';
@@ -9,11 +9,10 @@ import shuffleArray from '@/lib/shuffleArray';
 import { motion, AnimatePresence } from "framer-motion";
 import { Howl } from 'howler';
 import LinearProgress from '@mui/material/LinearProgress';
-import { siteConfig } from '@/constants/siteConfig';
+import Turnstile from 'react-hook-turnstile';
+import Img from '@/components/UI/Img';
 
-import useCaptcha from '@/hooks/useCaptcha';
-
-const CORRECT_THRESHOLD = 91;
+const CORRECT_THRESHOLD = 0.91; // Cosine similarity threshold to be considered correct
 const SFX_VOL = 0.5;
 
 const MySwal = withReactContent(Swal)
@@ -27,11 +26,7 @@ export default function GuessGPT() {
     const [totalScore, setTotalScore] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState();
-
-    const captcha = useCaptcha({
-        theme: 'light'
-    });
-
+    const [submitted, setSubmitted] = useState('');
 
     // Initialize sound effects
     const sfxStart = new Howl({
@@ -60,14 +55,15 @@ export default function GuessGPT() {
             const result = await axios.get("/api/guessgpt/get-game");
             setGameData(shuffleArray(result.data.documents));
             setGameIsActive(true);
+            sfxStart.play();
         } catch (err) {
             Swal.fire({
                 title: "Error",
                 html: "Could not fetch gama data!"
             })
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
-        sfxStart.play();
     }
 
     const resetGame = () => {
@@ -81,21 +77,89 @@ export default function GuessGPT() {
         setToken(null);
     }
 
-    const Captcha = () => {
-        return (
-            <div className="flex [&>*]:mx-auto h-[65px]">
-                {captcha.render(token => {
-                    setToken(token);
-                })}
-            </div>
-        )
+    const handleSubmit = async () => {
+        const formData = new FormData();
+        formData.append('answer', gameData[gameIndex].answer);
+        formData.append('submitted', submitted);
+        formData.append('token', token);
+        setIsLoading(true);
+        try {
+            const response = await fetch("/api/guessgpt/submit", {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) {
+                const mess = await response.text();
+                throw new Error(mess);
+            }
+            const json = await response.json();
+
+            return handleResult(parseFloat(json.score.toFixed(2)));
+        } catch (err) {
+            Swal.fire({
+                title: "Error",
+                html: err.message
+            })
+        } finally {
+            setIsLoading(false);
+        }
     }
+
+    const handleResult = (score) => {
+        let message;
+        if (score >= CORRECT_THRESHOLD) {
+            message = "You Guessed Right! 🤗";
+            sfxWin.play();
+        } else {
+            message = "Sorry, Not Quite Right 😟";
+            sfxLose.play();
+        }
+        Swal.fire({
+            title: message
+        });
+        setTotalScore(oldVal => oldVal + score);
+        setGameResults(oldVal => ([
+            ...oldVal,
+            {
+                phrase: gameData[gameIndex],
+                answer: submitted,
+                score: score
+            }
+        ]))
+        if (gameIndex + 1 >= gameData.length) {
+            // Game is over
+            endGame();
+        } else {
+            // Game continues
+            setGameIndex(oldVal => oldVal + 1);
+        }
+        setSubmitted('');
+    }
+
+    const endGame = () => {
+        sfxWinGame.play();
+        setGameIsActive(false);
+        setShowResults(true);
+    }
+
+    useEffect(() => {
+        if (submitted) {
+            handleSubmit();
+        }
+    }, [submitted]); //eslint-disable-line
 
     const answer = () => {
         MySwal.fire({
             title: 'Submit your answer',
             input: 'text',
-            html: <Captcha />,
+            html: <div className="flex [&>*]:mx-auto h-[65px]">
+                <Turnstile
+                    sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                    onVerify={(token) => {
+                        setToken(token);
+                    }}
+                />
+            </div>,
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -104,70 +168,10 @@ export default function GuessGPT() {
 
             showLoaderOnConfirm: true,
             preConfirm: async (answer) => {
-                const formData = new FormData();
-                formData.append('answer', gameData[gameIndex].answer);
-                formData.append('submitted', answer);
-                formData.append('token', token);
-                try {
-                    const response = await fetch("/api/guessgpt/submit", {
-                        method: 'POST',
-                        body: formData,
-                    });
-                    if (response.status !== 200) {
-                        Swal.fire("Error", response.statusText);
-                        return false;
-                    }
-                    const json = await response.json();
-                    return {
-                        score: json.score,
-                        answer: answer
-                    };
-                } catch (err) {
-                    console.error(err);
-                    Swal.fire({
-                        title: "Error",
-                        html: "Could not submit game answer!"
-                    })
-                }
+                setSubmitted(answer);
             },
-            allowOutsideClick: () => !Swal.isLoading(),
-            didClose: () => {
-                setToken(null);
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const score = parseInt(result.value.score);
-                let message;
-                if (score >= CORRECT_THRESHOLD) {
-                    message = "You Guessed Right! 🤗";
-                    sfxWin.play();
-                } else {
-                    message = "Sorry, Not Quite Right 😟";
-                    sfxLose.play();
-                }
-                Swal.fire({
-                    title: message
-                });
-                setTotalScore(oldVal => oldVal + score);
-                setGameResults(oldVal => ([
-                    ...oldVal,
-                    {
-                        phrase: gameData[gameIndex],
-                        answer: result.value.answer,
-                        score: score
-                    }
-                ]))
-                if (gameIndex + 1 >= gameData.length) {
-                    // Game is over
-                    sfxWinGame.play();
-                    setGameIsActive(false);
-                    setShowResults(true);
-                } else {
-                    // Game continues
-                    setGameIndex(oldVal => oldVal + 1);
-                }
-            }
-        })
+            allowOutsideClick: () => !Swal.isLoading()
+        });
     }
 
     return (
@@ -191,7 +195,7 @@ export default function GuessGPT() {
                                         ?
                                         <AnimatePresence>
                                             <motion.div
-                                                className=""
+                                                className="flex flex-col gap-6"
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 exit={{ opacity: 0 }}
@@ -202,13 +206,13 @@ export default function GuessGPT() {
                                                         value={(gameIndex + 1) / gameData.length * 100}
                                                         sx={{ height: '10px' }}
                                                     />
-                                                    <img
+                                                    <Img
                                                         className="w-fit h-auto"
                                                         src={`https://cdn.designly.biz/games/guessgpt/${gameData[gameIndex].image}`}
                                                         alt="Game Image"
                                                     />
                                                 </div>
-                                                <div className="mt-4 flex justify-around">
+                                                <div className="flex justify-around">
                                                     <button
                                                         className="btn-bordered bg-cyan-700 hover:bg-cyan-500"
                                                         onClick={answer}
@@ -222,6 +226,10 @@ export default function GuessGPT() {
                                                         onClick={resetGame}
                                                     >Reset Game</button>
                                                 </div>
+                                                <button
+                                                    className="btn-bordered bg-indigo-700 hover:bg-indigo-500 mx-auto"
+                                                    onClick={endGame}
+                                                >End Game</button>
                                             </motion.div>
                                         </AnimatePresence>
                                         :

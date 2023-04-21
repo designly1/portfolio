@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import readRequestBody from "@/lib/api/readRequestBody";
 import checkTurnstileToken from "@/lib/api/checkTurnstileToken";
+import getEmbedding from "@/lib/openAi/getEmbedding";
 
 // Use Next.js edge runtime
 export const config = {
@@ -19,29 +20,9 @@ export default async function handler(request) {
             throw new Error('Captcha verification failed');
         }
 
+        const embedding = await getEmbedding(requestData.searchTerm);
+
         const supabase = createClient(process.env.NEXT_PUBLIC_SB_URL, process.env.SB_SERVICE_KEY);
-
-        // Get embedding vector for search term via OpenAI
-        const input = requestData.searchTerm.replace(/\n/g, " ");
-        const result = await fetch("https://api.openai.com/v1/embeddings", {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.OPENAI_KEY}`
-            },
-            method: "POST",
-            body: JSON.stringify({
-                model: "text-embedding-ada-002",
-                input
-            })
-        });
-
-        if (!result.ok) {
-            const mess = await result.text();
-            throw new Error(mess)
-        }
-
-        const json = await result.json();
-        const embedding = json.data[0].embedding;
 
         // Perform cosine similarity search via RPC call
         const { data: chunks, error } = await supabase.rpc("vector_search", {

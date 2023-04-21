@@ -3,7 +3,7 @@ import Heading from '@/components/UI/Heading'
 import { v4 } from 'uuid';
 
 export default function GuessResults({ results, score, resetGame }) {
-    const maxScore = 100 * results.length;
+    const maxScore = results.length;
 
     return (
         <div className="max-w-[1200px] text-center mb-10">
