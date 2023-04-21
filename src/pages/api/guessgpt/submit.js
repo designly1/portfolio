@@ -11,7 +11,6 @@ export default async function handleRequest(request) {
     const OPENAI_API_KEY = process.env.OPENAI_KEY;
     const OPENAI_COMPLETION_ENDPOINT = 'https://api.openai.com/v1/completions';
     const formData = await readRequestBody(request);
-    console.log(formData)
     try {
         // Check CAPTCHA token
         if (!await checkTurnstileToken(formData.token)) {

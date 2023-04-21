@@ -1,3 +1,14 @@
+/**
+    URL: /api/vsearch/embed
+    
+    Searches for similar chunks of text in a Supabase database using cosine similarity.
+
+    @param {Request} request - The incoming HTTP request object.
+
+    @returns {Response} A response object containing a JSON array of matching text chunks.
+
+    @throws {Error} If captcha verification fails or search term length is out of range.
+*/
 import { createClient } from "@supabase/supabase-js";
 import readRequestBody from "@/lib/api/readRequestBody";
 import checkTurnstileToken from "@/lib/api/checkTurnstileToken";
@@ -18,6 +29,11 @@ export default async function handler(request) {
         // Validate CAPTCHA response
         if (!await checkTurnstileToken(requestData.token)) {
             throw new Error('Captcha verification failed');
+        }
+
+        // Validate length
+        if (requestData.searchTerm.length < 10 || requestData.searchTerm.length > 100) {
+            throw new Error('Search term length out of range');
         }
 
         const embedding = await getEmbedding(requestData.searchTerm);

@@ -1,3 +1,10 @@
+/**
+    URL: /api/vsearch/answer
+
+    A Next.js API route that processes a user's search query and text input to generate an AI-generated response.
+    @param {Request} request - The incoming HTTP request object.
+    @returns {Response} - The HTTP response containing the AI-generated response.
+*/
 import readRequestBody from "@/lib/api/readRequestBody";
 import endent from "endent";
 import openAiStream from "@/lib/openAi/openAiStream";
@@ -20,7 +27,15 @@ export default async function handler(request) {
 
         const textBody = requestData.chunks.map(c => {
             return c.content + ' ';
-        });
+        }).join("\n");
+
+        // Validate length
+        if (query.length < 10 || query.length > 100) {
+            throw new Error('Search term out of range');
+        }
+        if (textBody.length > 3000) {
+            throw new Error('Received data length out of range');
+        }
 
         const prompt = `Please answer this query: ${query}\n\n`
             + `Use only the following information:\n\n${textBody}`;

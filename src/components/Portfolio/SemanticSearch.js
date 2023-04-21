@@ -3,6 +3,7 @@ import Balancer from 'react-wrap-balancer'
 import AILoader from '../UI/AILoader';
 import PdfReader from '../UI/PdfReader';
 import useCaptcha from '@/hooks/useCaptcha';
+import ExtLink from '../UI/ExtLink';
 
 export default function SemanticSearch() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -123,6 +124,17 @@ export default function SemanticSearch() {
                 procedure call to a stored function in the PG database. The function returns 3 matches in order of its cosine similarity. Those 3 chunks are concatenated{" "}
                 and then another API call is made to ChatGPT to digest the information and generate an answer to the question based on the provided data.
             </p>
+            <div className="flex gap-6">
+                <ExtLink
+                    title="Blog Article"
+                    target="_blank"
+                    href="https://designly.biz/blog/post/implementing-semantic-search-with-supabase-next-js-and-openai-a-tutorial"
+                />
+                <ExtLink
+                    title="Source Code"
+                    href="/gist/05258dc58a0a67698f4cf5b21bb9d913"
+                />
+            </div>
             <div className="flex flex-col gap-4">
                 <h2 className="text-xl">Suggested Queries:</h2>
                 <ol className="list-decimal">

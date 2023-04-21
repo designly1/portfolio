@@ -1,3 +1,13 @@
+/**
+
+    Calls OpenAI's chat completions API and returns a ReadableStream that emits the text responses from the model.
+    @async
+    @function
+    @param {string} system - The system prompt to send to the OpenAI model.
+    @param {string} prompt - The user prompt to send to the OpenAI model.
+    @returns {ReadableStream} A ReadableStream that emits text responses from the OpenAI model.
+    @throws {Error} If the HTTP response status code is not 200.
+*/
 import { createParser } from "eventsource-parser";
 
 const openAiStream = async (system, prompt) => {

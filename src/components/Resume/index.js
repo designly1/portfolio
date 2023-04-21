@@ -53,109 +53,111 @@ const Job = ({
 
 export default function Resume() {
     return (
-            <div className="min-h-screen bg-bg2 flex flex-col gap-10 px-4 md:px-10 lg:px-[20%] py-20 print:py-6">
-                <div className="flex flex-col gap-2">
-                    <Heading type='h1' appendClass="text-center">Jay Simons</Heading>
-                    <h2 className="text-center text-xl">Software Engineer</h2>
-                </div>
-                <Job
-                    company="Designly"
-                    location="Madison, WI"
-                    title="Web Developer"
-                    dates="2008-Present"
-                    desc={[
-                        "Designed and built company websites and e-commerce stores for various clients using WordPress, Shopify, and custom CMS platforms.",
-                        "Front-end development using React/Next.js frameworks",
-                        "Back-end development using Node.js/Express, PHP/Laravel and serverless solutions such as CloudFlare & AWS.",
-                        "Database design using MySQL, MS SQL, Postgre and MongoDB",
-                        "Stayed current with the latest web development technologies and trends to ensure the company's solutions were cutting-edge and innovative."
-                    ]}
-                    skills={[
-                        "HTML, CSS, JavaScript",
-                        "React/Next.js",
-                        "PHP/Laravel",
-                        "NGINX/PHP-FPM/MySQL",
-                        "Photoshop/Illustrator",
-                        "Figma/XD",
-                        "API Development",
-                        "CloudFlare/AWS/Google Cloud",
-                        "Serverless Architecture"
-                    ]}
-                />
-                <Job
-                    company="Vortex Optics"
-                    location="Middleton, WI"
-                    title="Director of IT"
-                    dates="2005-2008"
-                    desc={[
-                        "Re-designed an obsolete in-house IT infrastructure",
-                        "Managed complete custom re-design of e-commerce platform",
-                        "Identified and outsourced certain mission-critical services",
-                        "Identified and mitigated bottlenecks in information and workflows",
-                        "Integrated several departments, such as online orders -> shipping/receiving -> accounting"
-                    ]}
-                    skills={[
-                        "HTML, CSS, JavaScript",
-                        "Linux/Apache/PHP/MySQL",
-                        "Windows Server 2003",
-                        "Windows Terminal Services",
-                        "Central Backup & Deployment",
-                        "Active Directory / SSO",
-                        "DNS Management",
-                        "Datacenter Management",
-                        "Database Design & Management"
-                    ]}
-                />
-                <Job
-                    company="Terracom"
-                    location="Madison, WI"
-                    title="Systems Administrator"
-                    dates="2003-2005"
-                    desc={[
-                        "Managed several OpenBSD servers",
-                        "Managed several Portmaster dialup networking modem banks",
-                        "Managed QoS & contention ratio for 20k dialup subscribers",
-                        "Engineered wireless 802.11A point-to-point & point-to-multipoint networks",
-                        "Conducted wireless site surveys for potential clients"
-                    ]}
-                    skills={[
-                        "OpenBSD systems administration",
-                        "Management dialup networking equipment",
-                        "802.11A/B wireless networking",
-                        "Network engineering",
-                        "Outside sales & site surveys",
-                        "Top-tier technical support"
-                    ]}
-                />
-                <Job
-                    company="JVLNET Internet Services"
-                    location="Janesville, WI"
-                    title="Technical Support Supervisor"
-                    dates="2001-2003"
-                    desc={[
-                        "Managed Internet provider support call center with 8-10 staff",
-                        "Managed in-house ERP/Radius accounting server",
-                        "Sudo access to several Redhat Linux servers",
-                        "Managed several Portmaster dialup networking modem banks",
-                        "Top-tier technical support",
-                        "Inside/outside sales",
-                        "Provided onsite services to business clients",
-                        "Managed telecommunications systems"
-                    ]}
-                    skills={[
-                        "RedHat Linux",
-                        "Windows NT4 / Windows 2000",
-                        "MS SQL Server",
-                        "Radius/ERP software",
-                        "Livingston Portmaster management",
-                        "Perl scripting",
-                        "Direct-customer support",
-                        "Employee training & management",
-                        "Call monitoring",
-                        "Troubleshooting DUN connections",
-                        "Installed / managed ISDN/DS-1/DS-3 & frame-relay connections"
-                    ]}
-                />
+        <div className="min-h-screen bg-bg2 flex flex-col gap-10 px-4 md:px-10 lg:px-[20%] py-20 print:py-6">
+            <div className="flex flex-col gap-2">
+                <Heading type='h1' appendClass="text-center">Jay Simons</Heading>
+                <h2 className="text-center text-xl">Software Engineer</h2>
             </div>
+            <Job
+                company="Designly"
+                location="Madison, WI"
+                title="Web Developer"
+                dates="2008-Present"
+                desc={[
+                    "Custom AI solutions, such as semantic/vector search, chat bots, telephone IVR and more.",
+                    "Designed and built company websites and e-commerce stores for various clients using WordPress, Shopify, and custom CMS platforms.",
+                    "Front-end development using React/Next.js frameworks",
+                    "Back-end development using Node.js/Express, PHP/Laravel and serverless solutions such as CloudFlare & AWS.",
+                    "Database design using MySQL, MS SQL, Postgre and MongoDB",
+                    "Stayed current with the latest web development technologies and trends to ensure the company's solutions were cutting-edge and innovative."
+                ]}
+                skills={[
+                    "AI prompt engineering",
+                    "HTML, CSS, JavaScript",
+                    "React/Next.js",
+                    "PHP/Laravel",
+                    "NGINX/PHP-FPM/MySQL",
+                    "Photoshop/Illustrator",
+                    "Figma/XD",
+                    "API Development",
+                    "CloudFlare/AWS/Google Cloud",
+                    "Serverless Architecture"
+                ]}
+            />
+            <Job
+                company="Vortex Optics"
+                location="Middleton, WI"
+                title="Director of IT"
+                dates="2005-2008"
+                desc={[
+                    "Re-designed an obsolete in-house IT infrastructure",
+                    "Managed complete custom re-design of e-commerce platform",
+                    "Identified and outsourced certain mission-critical services",
+                    "Identified and mitigated bottlenecks in information and workflows",
+                    "Integrated several departments, such as online orders -> shipping/receiving -> accounting"
+                ]}
+                skills={[
+                    "HTML, CSS, JavaScript",
+                    "Linux/Apache/PHP/MySQL",
+                    "Windows Server 2003",
+                    "Windows Terminal Services",
+                    "Central Backup & Deployment",
+                    "Active Directory / SSO",
+                    "DNS Management",
+                    "Datacenter Management",
+                    "Database Design & Management"
+                ]}
+            />
+            <Job
+                company="Terracom"
+                location="Madison, WI"
+                title="Systems Administrator"
+                dates="2003-2005"
+                desc={[
+                    "Managed several OpenBSD servers",
+                    "Managed several Portmaster dialup networking modem banks",
+                    "Managed QoS & contention ratio for 20k dialup subscribers",
+                    "Engineered wireless 802.11A point-to-point & point-to-multipoint networks",
+                    "Conducted wireless site surveys for potential clients"
+                ]}
+                skills={[
+                    "OpenBSD systems administration",
+                    "Management dialup networking equipment",
+                    "802.11A/B wireless networking",
+                    "Network engineering",
+                    "Outside sales & site surveys",
+                    "Top-tier technical support"
+                ]}
+            />
+            <Job
+                company="JVLNET Internet Services"
+                location="Janesville, WI"
+                title="Technical Support Supervisor"
+                dates="2001-2003"
+                desc={[
+                    "Managed Internet provider support call center with 8-10 staff",
+                    "Managed in-house ERP/Radius accounting server",
+                    "Sudo access to several Redhat Linux servers",
+                    "Managed several Portmaster dialup networking modem banks",
+                    "Top-tier technical support",
+                    "Inside/outside sales",
+                    "Provided onsite services to business clients",
+                    "Managed telecommunications systems"
+                ]}
+                skills={[
+                    "RedHat Linux",
+                    "Windows NT4 / Windows 2000",
+                    "MS SQL Server",
+                    "Radius/ERP software",
+                    "Livingston Portmaster management",
+                    "Perl scripting",
+                    "Direct-customer support",
+                    "Employee training & management",
+                    "Call monitoring",
+                    "Troubleshooting DUN connections",
+                    "Installed / managed ISDN/DS-1/DS-3 & frame-relay connections"
+                ]}
+            />
+        </div>
     )
 }

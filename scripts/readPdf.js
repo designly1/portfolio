@@ -1,3 +1,12 @@
+/**
+
+    Parses a PDF file and extracts content, splitting it into chunks of maximum tokensPerChunk length
+    @param {string} inFile - The path to the input PDF file
+    @param {string} outFile - The path to the output JSON file
+    @param {number} tokensPerChunk - The maximum number of tokens allowed per chunk
+    @param {string} documentTitle - The title of the document being parsed
+    @returns {void}
+*/
 import fs from 'fs'
 import { encode } from 'gpt-3-encoder';
 import PDF from 'pdf-scraper';

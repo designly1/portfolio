@@ -1,3 +1,13 @@
+/**
+
+    This script reads a JSON file of data, generates text embeddings using the OpenAI GPT-3 API,
+    and inserts the data and embeddings into a PostgreSQL table via Supabase.
+    @requires @next/env
+    @requires @supabase/supabase-js
+    @requires fs
+    @requires openai
+    @requires gpt-3-encoder
+*/
 import { loadEnvConfig } from "@next/env";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
