@@ -63,6 +63,16 @@ const portfolioItems = [
         title: "Websites",
         items: [
             {
+                title: "The New Designly Blog!",
+                route: "https://blog.designly.biz",
+                description: "Completely custom-built SSG in PHP. All vanilla JS and static HTML pages. Blazingly fast!"
+            },
+            {
+                title: "Lake Life Rentals",
+                route: "https://llr.one",
+                description: "Watercraft rental agency website. MERN-stack."
+            },
+            {
                 title: "RadioShield",
                 route: "https://radio-shield.com",
                 description: "E-commerce site. Next.js front-end and Shopify back-end."
