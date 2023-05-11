@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SlHome } from 'react-icons/sl'
 import { BsInfoSquare, BsBriefcase, BsEnvelopeAt } from 'react-icons/bs'
 import { ImProfile } from 'react-icons/im'
+import { TfiVideoClapper } from 'react-icons/tfi'
 
 import jay from '@/img/jay.jpg'
 
@@ -56,6 +57,11 @@ export default function Sidebar({ show, setter }) {
                         name="About Me"
                         route="/about"
                         icon={<BsInfoSquare />}
+                    />
+                    <MenuItem
+                        name="Videos"
+                        route="/videos"
+                        icon={<TfiVideoClapper />}
                     />
                     <MenuItem
                         name="Resume"
