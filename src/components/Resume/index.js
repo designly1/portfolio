@@ -1,6 +1,7 @@
 import React from 'react'
 import Heading from '../UI/Heading'
 import { v4 } from 'uuid'
+import Link from 'next/link'
 
 import { TbCalendarTime } from 'react-icons/tb'
 
@@ -57,6 +58,7 @@ export default function Resume() {
             <div className="flex flex-col gap-2">
                 <Heading type='h1' appendClass="text-center">Jay Simons</Heading>
                 <h2 className="text-center text-xl">Software Engineer</h2>
+                <p className="flex gap-1 mx-auto mt-4"><Link className="link" href="/resume/print">Click here</Link> for the print version.</p>
             </div>
             <Job
                 company="Designly"
