@@ -10,6 +10,16 @@ const portfolioItems = [
         ]
     },
     {
+        title: "Tools & Utilities",
+        items: [
+            {
+                title: "Rooftop Area Calculator",
+                route: "/portfolio/roof-calc",
+                description: "A tool for calculating the area of a roof based on footprint area and pitch."
+            }
+        ]
+    },
+    {
         title: "Games",
         items: [
             {
