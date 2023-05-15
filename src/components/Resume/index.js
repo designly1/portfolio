@@ -12,7 +12,7 @@ const Box = ({ children }) => (
 )
 
 const Dates = ({ children }) => (
-    <div className="btn-gap text-designlyRight ml-auto">
+    <div className="btn-gap text-designlyRight">
         <TbCalendarTime />
         <div>{children}</div>
     </div>
@@ -31,12 +31,12 @@ const Job = ({
     skills
 }) => (
     <Box>
-        <div className="grid grid-cols-3 [&>*]:mb-auto">
-            <div className="flex flex-col gap-1">
-                <Heading type='h3' appendClass="text-designlyLeft">{company}</Heading>
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex flex-col gap-1 text-center md:text-left">
+                <h3 className="text-designlyLeft text-2xl">{company}</h3>
                 <div>{location}</div>
             </div>
-            <h4 className="text-xl text-designlyMiddle print:text-md text-center">{title}</h4>
+            <h4 className="text-xl text-designlyMiddle print:text-md text-center w-fit">{title}</h4>
             <Dates>{dates}</Dates>
         </div>
         <BoxHeading>Job Description</BoxHeading>
@@ -44,7 +44,7 @@ const Job = ({
             {desc.map(d => <li key={v4()}>• {d}</li>)}
         </ul>
         <BoxHeading>Skills</BoxHeading>
-        <ul className="grid grid-cols-3 [&>*]:mb-4">
+        <ul className="grid grid-cols-2 md:grid-cols-3 [&>*]:mb-4">
             {
                 skills.map(s => <li key={v4()}>• {s}</li>)
             }
