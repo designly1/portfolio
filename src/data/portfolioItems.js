@@ -16,6 +16,11 @@ const portfolioItems = [
                 title: "Rooftop Area Calculator",
                 route: "/portfolio/roof-calc",
                 description: "A tool for calculating the area of a roof based on footprint area and pitch."
+            },
+            {
+                title: "PHP-Based Static Site Generator",
+                route: "/gist/77bd50d03cea977311fb43fbb14ad376",
+                description: "A static site generator (SSG) and templating engine built in PHP. Used for my blog site."
             }
         ]
     },
