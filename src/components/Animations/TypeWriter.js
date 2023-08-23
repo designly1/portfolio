@@ -47,7 +47,7 @@ export default function TypeWriter({ appendClass, hats, prefix }) {
 
         // Cleanup interval timer
         return () => clearInterval(id);
-    }, []);
+    }, []); //  eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className={className}>
