@@ -105,7 +105,7 @@ export default function SemanticSearch() {
 				</ol>
 			</div>
 			<form className="w-full md:w-[400px] flex flex-col gap-6" onSubmit={handleSearch}>
-				{!isDev ? (
+				{!isDev && !isLoading ? (
 					<div className="mx-auto">
 						{' '}
 						<Turnstile
