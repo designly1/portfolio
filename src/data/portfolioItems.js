@@ -1,5 +1,20 @@
 const portfolioItems = [
 	{
+		title: 'Open Source Projects',
+		items: [
+			{
+				title: 'nextjs13-progress',
+				route: 'https://www.npmjs.com/package/nextjs13-progress',
+				description: 'A progress bar for Next.js 13 app router',
+			},
+			{
+				title: 'nextjs14-auth-sequelize-starter',
+				route: 'https://github.com/designly1/nextjs14-auth-sequelize-starter',
+				description: 'A complete Next.js 14 starter app with JWT authentication and Sequelize ORM',
+			},
+		],
+	},
+	{
 		title: 'Major Projects',
 		items: [
 			{
