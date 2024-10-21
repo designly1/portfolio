@@ -92,7 +92,7 @@ export default function SemanticSearch() {
 				<ExtLink
 					title="Blog Article"
 					target="_blank"
-					href="https://designly.biz/blog/post/implementing-semantic-search-with-supabase-next-js-and-openai-a-tutorial"
+					href="https://blog.designly.biz/implementing-semantic-search-with-supabase-next-js-and-openai-a-tutorial"
 				/>
 				<ExtLink title="Source Code" href="/gist/05258dc58a0a67698f4cf5b21bb9d913" />
 			</div>
